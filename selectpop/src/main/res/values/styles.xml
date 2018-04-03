@@ -1,0 +1,9 @@
+<resources>
+    <!-- 设置pop由下自上的动画 -->
+    <style name="popwindow_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popshow</item>
+        <!-- 指定显示的动画xml -->
+        <item name="android:windowExitAnimation">@anim/pophide</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+</resources>
