@@ -7,34 +7,43 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by hasee on 2018/4/2.
  */
 
 public class ParentCategoryAdapter extends BaseAdapter {
     private Context mContext;
-    private String[] str;
+    //private String[] str;
     private int pos;
+    private List<SelectModel> parentList;
 
-    public ParentCategoryAdapter(Context context, String[] str) {
+  /*  public ParentCategoryAdapter(Context context, String[] str) {
         mContext = context;
         this.str = str;
+    }*/
+
+    public ParentCategoryAdapter(Context context, List<SelectModel> parentList) {
+        mContext = context;
+        this.parentList = parentList;
     }
 
     @Override
     public int getCount() {
-        return str.length;
+        return parentList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return parentList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
@@ -46,15 +55,16 @@ public class ParentCategoryAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-
-        holder.tvParentCategoryName.setText(str[position]);
-
-        if(pos==position){
+        SelectModel selectModel = parentList.get(position);
+        if(selectModel!=null){
+            holder.tvParentCategoryName.setText(selectModel.getItemContent());
+        }
+        if (pos == position) {
             holder.tvParentCategoryName.setTextColor(mContext.getResources().getColor(R.color.green_29aca3));
-         //   convertView.setBackgroundColor(mContext.getResources().getColor(R.color.zu_choose_right_item_bg));
-        }else{
+            //   convertView.setBackgroundColor(mContext.getResources().getColor(R.color.zu_choose_right_item_bg));
+        } else {
             holder.tvParentCategoryName.setTextColor(mContext.getResources().getColor(R.color.text_color));
-           // convertView.setBackgroundColor(mContext.getResources().getColor(R.color.zu_choose_left_item_bg));
+            // convertView.setBackgroundColor(mContext.getResources().getColor(R.color.zu_choose_left_item_bg));
         }
         return convertView;
     }

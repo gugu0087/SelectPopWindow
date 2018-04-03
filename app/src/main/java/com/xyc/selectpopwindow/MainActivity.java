@@ -15,7 +15,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private List<SelectModel> parentList = new ArrayList<>();
     private List<List<SelectModel>> childrenList = new ArrayList<>();
-    private List<SelectModel> childInList = new ArrayList<>();
+    private List<List<List<SelectModel>>> granson = new ArrayList<>();
+
+    private List<SelectModel> childInList;
     private String[] parentStrings = {"全城", "中原区", "二七区", "管城区", "金水区", "上街区", "惠济区", "郑东新区", "高新区", "经开区", "郑州周边"};
     private String[][] childrenStrings = {{},
             {"中原1", "中原2", "中原3", "中原4", "中原5", "中原6", "中原7", "中原8", "中原9", "中原10", "中原11", "中原12", "中原13", "中原14", "中原15"},
@@ -48,27 +50,34 @@ public class MainActivity extends AppCompatActivity {
     private void setdata() {
         initData();
         if (mPopupWindow == null) {
-            mPopupWindow = new SelectPopupWindow(parentStrings, childrenStrings, this, selectCategory);
+            // mPopupWindow = new SelectPopupWindow(parentStrings, childrenStrings, this, selectCategory);
+            mPopupWindow = new SelectPopupWindow(parentList, childrenList, this, selectCategory);
         }
         mPopupWindow.showPopAsDropDown(tvPosition, -5, 5);
     }
 
     private void initData() {
+        parentList.clear();
+        childrenList.clear();
+
         for (int i = 0; i < 15; i++) {
             SelectModel selectModel = new SelectModel();
             selectModel.setSelectId(i + 1);
             selectModel.setItemContent("item" + (i + 1));
             parentList.add(selectModel);
         }
+
         for (int j = 0; j < 15; j++) {
+            childInList = new ArrayList<>();
             for (int k = 0; k < 7; k++) {
                 SelectModel selectModel = new SelectModel();
                 selectModel.setSelectId(k + 1);
-                selectModel.setItemContent("item" + (k + 1));
+                selectModel.setItemContent("item" + j + "-" + (k + 1));
                 childInList.add(selectModel);
             }
             childrenList.add(childInList);
         }
+
     }
 
     /**
