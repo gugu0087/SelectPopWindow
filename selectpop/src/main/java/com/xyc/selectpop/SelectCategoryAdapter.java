@@ -7,26 +7,22 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.xyc.selectpop.model.SelectModel;
+
 import java.util.List;
 
 /**
  * Created by hasee on 2018/4/2.
  */
 
-public class ParentCategoryAdapter extends BaseAdapter {
+public class SelectCategoryAdapter extends BaseAdapter {
     private Context mContext;
-    //private String[] str;
+
     private int pos;
     private List<SelectModel> parentList;
 
-  /*  public ParentCategoryAdapter(Context context, String[] str) {
+    public SelectCategoryAdapter(Context context) {
         mContext = context;
-        this.str = str;
-    }*/
-
-    public ParentCategoryAdapter(Context context, List<SelectModel> parentList) {
-        mContext = context;
-        this.parentList = parentList;
     }
 
     @Override
@@ -50,14 +46,14 @@ public class ParentCategoryAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_parent_category_item, null);
-            holder.tvParentCategoryName = (TextView) convertView.findViewById(R.id.tv_parent_category_name);
+            holder.tvParentCategoryName = convertView.findViewById(R.id.tv_parent_category_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
         SelectModel selectModel = parentList.get(position);
-        if(selectModel!=null){
-            holder.tvParentCategoryName.setText(selectModel.getItemContent());
+        if (selectModel != null) {
+            holder.tvParentCategoryName.setText(selectModel.getName());
         }
         if (pos == position) {
             holder.tvParentCategoryName.setTextColor(mContext.getResources().getColor(R.color.green_29aca3));
@@ -71,6 +67,10 @@ public class ParentCategoryAdapter extends BaseAdapter {
 
     private class ViewHolder {
         private TextView tvParentCategoryName;
+    }
+
+    public void setSelectDataList(List<SelectModel> parentList) {
+        this.parentList = parentList;
     }
 
     public void setSelectedPosition(int pos) {

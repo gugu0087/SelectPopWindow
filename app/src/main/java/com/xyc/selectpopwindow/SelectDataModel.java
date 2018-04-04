@@ -1,29 +1,29 @@
-package com.xyc.selectpop;
+package com.xyc.selectpopwindow;
 
 /**
  * Created by hasee on 2018/4/3.
  */
 
-public class SelectModel {
+public class SelectDataModel {
     private int selectId;// 选项id
     private String itemContent;// 选项内容
     private String itemId;// 预留一个String 类型的id
     private String extraTip;//其他内容提示
 
-    public SelectModel() {
+    public SelectDataModel() {
     }
 
-    public SelectModel(int selectId, String itemContent) {
+    public SelectDataModel(int selectId, String itemContent) {
         this.selectId = selectId;
         this.itemContent = itemContent;
     }
 
-    public SelectModel(String itemContent, String itemId) {
+    public SelectDataModel(String itemContent, String itemId) {
         this.itemContent = itemContent;
         this.itemId = itemId;
     }
 
-    public SelectModel(int selectId, String itemContent, String itemId, String extraTip) {
+    public SelectDataModel(int selectId, String itemContent, String itemId, String extraTip) {
         this.selectId = selectId;
         this.itemContent = itemContent;
         this.itemId = itemId;

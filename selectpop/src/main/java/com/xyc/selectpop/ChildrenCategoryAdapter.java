@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.xyc.selectpop.model.SelectModel;
+
 import java.util.List;
 
 /**
@@ -15,37 +17,32 @@ import java.util.List;
 
 public class ChildrenCategoryAdapter extends BaseAdapter {
     private Context mContext;
-    /*    private String[] str;*/
-    private List<SelectModel> childInList;
+    private List<SelectModel> selectModelList;
 
     public ChildrenCategoryAdapter(Context context) {
         mContext = context;
     }
 
-   /* public void setDatas(String[] str) {
-        this.str = str;
-    }*/
-
-    public void setChildInList(List<SelectModel> childInList) {
-        this.childInList = childInList;
+    public void setChildInList(List<SelectModel> selectModelList) {
+        this.selectModelList = selectModelList;
     }
 
     @Override
     public int getCount() {
-        if (childInList == null) {
+        if (selectModelList == null) {
             return 0;
         }
-        return childInList.size();
+        return selectModelList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return childInList.get(position);
+        return selectModelList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return childInList.get(position).getSelectId();
+        return selectModelList.get(position).getId();
     }
 
     @Override
@@ -59,9 +56,9 @@ public class ChildrenCategoryAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        SelectModel selectModel = childInList.get(position);
+        SelectModel selectModel = selectModelList.get(position);
         if (selectModel != null) {
-            holder.tvChildrenCategoryName.setText(selectModel.getItemContent());
+            holder.tvChildrenCategoryName.setText(selectModel.getName());
         }
         return convertView;
     }
