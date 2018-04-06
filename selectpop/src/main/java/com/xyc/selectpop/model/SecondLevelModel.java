@@ -7,15 +7,15 @@ import java.util.List;
  */
 
 public class SecondLevelModel {
-    private Integer id;
+    private long id;
     private String name;
     private List<SelectModel> thirdLevel;
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

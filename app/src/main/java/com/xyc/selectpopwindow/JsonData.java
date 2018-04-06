@@ -52,9 +52,11 @@ public class JsonData {
             "                       \"secondLevel\":[\n" +
             "                              {\n" +
             "                               \"name\":\"name-2-1\",\n" +
+            "                           \"id\":19,\n" +
             "                               \"thirdLevel\":[\n" +
             "                                            {\n" +
             "                                                \"name\":\"name3\" \n" +
+            "                                                       , \"id\":199\n" +
             "                                             }\n" +
             "                               \n" +
             "                                    ]\n" +

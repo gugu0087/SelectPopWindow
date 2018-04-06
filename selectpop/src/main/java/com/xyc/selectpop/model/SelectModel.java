@@ -5,22 +5,22 @@ package com.xyc.selectpop.model;
  */
 
 public class SelectModel {
-    private Integer id;// 选项id
+    private long id;// 选项id
     private String name;// 选项内容
 
     public SelectModel() {
     }
 
-    public SelectModel(Integer id, String name) {
+    public SelectModel(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

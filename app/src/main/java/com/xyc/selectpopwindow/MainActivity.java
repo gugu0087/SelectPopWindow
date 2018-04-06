@@ -2,11 +2,13 @@ package com.xyc.selectpopwindow;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.xyc.selectpop.inteface.TabSelectListener;
+import com.xyc.selectpop.model.FirstLevelModel;
 import com.xyc.selectpop.model.SelectModel;
 import com.xyc.selectpop.SelectPopupWindow;
 
@@ -14,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private List<SelectModel> firstList = new ArrayList<>();
-    private List<SelectModel> secondList = new ArrayList<>();
-    private List<SelectModel> thirdList = new ArrayList<>();
 
 
 
@@ -45,9 +44,11 @@ public class MainActivity extends AppCompatActivity {
             // mPopupWindow = new SelectPopupWindow(parentStrings, childrenStrings, this, selectCategory);
             mPopupWindow = new SelectPopupWindow(this, selectCategory,firstSelectCategory);
         }
+        List<FirstLevelModel> firstLevel = netDataModel.getFirstLevel();
+        mPopupWindow.setSelectCategoryData(firstLevel);
 
-        mPopupWindow.setLvChildrenCategoryVisible(View.GONE);
         mPopupWindow.showPopAsDropDown(tvPosition, -5, 5);
+
         mPopupWindow.setTabSelectListener(new TabSelectListener() {
 
             @Override
@@ -55,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (selectId == mPopupWindow.FIRST_TAB) {
 
-                    mPopupWindow.setLvChildrenCategoryVisible(View.GONE);
+
                 } else if (selectId == mPopupWindow.SECOND_TAB) {
 
-                    mPopupWindow.setLvChildrenCategoryVisible(View.VISIBLE);
+
                 }
 
             }
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initData() {
       netDataModel = JsonData.getNetData();
-
+        Log.d("xyc", "initData: netDataModel="+netDataModel);
     }
 
     /**
@@ -83,17 +84,26 @@ public class MainActivity extends AppCompatActivity {
      */
     private SelectPopupWindow.SelectCategory selectCategory = new SelectPopupWindow.SelectCategory() {
         @Override
-        public void selectCategory(int parentSelectposition, int childrenSelectposition) {
-
-
-            Toast.makeText(MainActivity.this, "父类别:" + parentSelectposition + "  子类别:" + childrenSelectposition, Toast.LENGTH_SHORT).show();
+        public void selectCategoryPos(int secondSelectPos, int thirdSelectPos) {
+            Log.d("xyc", "selectCategoryPos: secondSelectPos="+secondSelectPos+"thirdSelectPos="+thirdSelectPos);
         }
+
+        @Override
+        public void selectCateGoryId(long secondSelectId, long thirdSelectId) {
+            Log.d("xyc", "selectCategoryPos: secondSelectId="+secondSelectId+"thirdSelectId="+thirdSelectId);
+
+            Toast.makeText(MainActivity.this, "父类别:Id" + secondSelectId + "  子类别Id:" + thirdSelectId, Toast.LENGTH_SHORT).show();
+
+        }
+
     };
+
     private SelectPopupWindow.FirstSelectCategory firstSelectCategory = new SelectPopupWindow.FirstSelectCategory() {
         @Override
-        public void selectedItem(int position) {
+        public void selectedItem(int position, long id) {
+            Toast.makeText(MainActivity.this, "父类别:" + position+"id="+id , Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(MainActivity.this, "父类别:" + position , Toast.LENGTH_SHORT).show();
         }
+
     };
 }
