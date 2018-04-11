@@ -72,7 +72,7 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         // 一级适配器
         firstCategoryAdapter = new SelectCategoryAdapter(activity);
         firstCategoryAdapter.setSelectDataList(firstLevelList);
-         lvFirstCategory.setAdapter(firstCategoryAdapter);
+        lvFirstCategory.setAdapter(firstCategoryAdapter);
 
         //二级适配器
         secondCategoryAdapter = new SelectCategoryAdapter(activity);
@@ -204,7 +204,7 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (selectCategory != null) {
                 selectCategory.selectCategoryPos(secondCategoryAdapter.getPos(), position);
-                selectCategory.selectCateGoryId(secondLevelList.get(secondCategoryAdapter.getPos()).getId(),thirdLevelList.get(position).getId());
+                selectCategory.selectCateGoryId(secondLevelList.get(secondCategoryAdapter.getPos()).getId(), thirdLevelList.get(position).getId());
             }
             dismiss();
         }
@@ -225,14 +225,13 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         }
     };
     /**
-     *一级类目点击事件
-     *
+     * 一级类目点击事件
      */
     private AdapterView.OnItemClickListener firstItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-            if(firstSelectCategory!=null){
-                firstSelectCategory.selectedItem(position,firstLevelList.get(position).getId());
+            if (firstSelectCategory != null) {
+                firstSelectCategory.selectedItem(position, firstLevelList.get(position).getId());
             }
             firstCategoryAdapter.setSelectedPosition(position);
             secondLevelList.clear();
@@ -245,31 +244,37 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         }
     };
 
-    public void updateFirstCategoryUI(){
+    public void updateFirstCategoryUI() {
         lvFirstCategory.setVisibility(View.VISIBLE);
         lvSecondCategory.setVisibility(View.GONE);
         lvThirdCategory.setVisibility(View.GONE);
         firstLevelList.clear();
-         for(int i=0;i<firstLevelModels.size();i++){
-             SelectModel selectModel = new SelectModel();
-             selectModel.setId(firstLevelModels.get(i).getId());
-             selectModel.setName(firstLevelModels.get(i).getName());
-             firstLevelList.add(selectModel);
-         }
+        if (firstLevelModels == null || firstLevelModels.size() == 0) {
+            return;
+        }
+        for (int i = 0; i < firstLevelModels.size(); i++) {
+            SelectModel selectModel = new SelectModel();
+            selectModel.setId(firstLevelModels.get(i).getId());
+            selectModel.setName(firstLevelModels.get(i).getName());
+            firstLevelList.add(selectModel);
+        }
         firstCategoryAdapter.notifyDataSetChanged();
     }
 
-    public void updateSecondCategoryUI(int position){
+    public void updateSecondCategoryUI(int position) {
         lvFirstCategory.setVisibility(View.GONE);
         lvSecondCategory.setVisibility(View.VISIBLE);
         lvThirdCategory.setVisibility(View.VISIBLE);
-        if(position>=firstLevelModels.size()){
+        if (firstLevelModels == null || firstLevelModels.size() == 0) {
+            return;
+        }
+        if (position >= firstLevelModels.size()) {
             position = firstLevelModels.size();
         }
         secondLevelList.clear();
         FirstLevelModel firstLevelModel = firstLevelModels.get(position);
         List<SecondLevelModel> secondLevel = firstLevelModel.getSecondLevel();
-        for(int i=0;i<secondLevel.size();i++){
+        for (int i = 0; i < secondLevel.size(); i++) {
             SelectModel selectModel = new SelectModel();
             selectModel.setId(secondLevel.get(i).getId());
             selectModel.setName(secondLevel.get(i).getName());
@@ -278,16 +283,19 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         secondCategoryAdapter.notifyDataSetChanged();
     }
 
-    public void updateThirdCategoryUI(int position){
+    public void updateThirdCategoryUI(int position) {
         lvFirstCategory.setVisibility(View.GONE);
         lvSecondCategory.setVisibility(View.VISIBLE);
         lvThirdCategory.setVisibility(View.VISIBLE);
         int firstSelectPos = firstCategoryAdapter.getPos();
         thirdLevelList.clear();
+        if (firstLevelModels == null || firstLevelModels.size() == 0) {
+            return;
+        }
         FirstLevelModel firstLevelModel = firstLevelModels.get(firstSelectPos);
         SecondLevelModel secondLevelModel = firstLevelModel.getSecondLevel().get(position);
         List<SelectModel> thirdLevel = secondLevelModel.getThirdLevel();
-        if(thirdLevel==null||thirdLevel.size()==0){
+        if (thirdLevel == null || thirdLevel.size() == 0) {
             return;
         }
         thirdLevelList.addAll(thirdLevel);
@@ -303,7 +311,9 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
             lvFirstCategory.setVisibility(View.VISIBLE);
             lvSecondCategory.setVisibility(View.GONE);
             lvThirdCategory.setVisibility(View.GONE);
-            tabSelectListener.selectItem(FIRST_TAB);
+            if(tabSelectListener!=null){
+                tabSelectListener.selectItem(FIRST_TAB);
+            }
             updateFirstCategoryUI();
         } else if (view.getId() == R.id.tvSecondTab) {
             tvFirstTab.setSelected(false);
@@ -311,10 +321,12 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
             lvFirstCategory.setVisibility(View.GONE);
             lvSecondCategory.setVisibility(View.VISIBLE);
             lvThirdCategory.setVisibility(View.VISIBLE);
-            tabSelectListener.selectItem(SECOND_TAB);
+            if(tabSelectListener!=null){
+                tabSelectListener.selectItem(SECOND_TAB);
+            }
             int firstPos = firstCategoryAdapter.getPos();
             updateSecondCategoryUI(firstPos);
-            int secondPos= secondCategoryAdapter.getPos();
+            int secondPos = secondCategoryAdapter.getPos();
             updateThirdCategoryUI(secondPos);
         } else {
 
@@ -330,16 +342,17 @@ public class SelectPopupWindow extends PopupWindow implements View.OnClickListen
         /**
          * 把选中的下标通过方法回调回来
          *
-         * @param secondSelectPos   二级类别选中下标
-         * @param thirdSelectPos 三级类别选中下标
+         * @param secondSelectPos 二级类别选中下标
+         * @param thirdSelectPos  三级类别选中下标
          */
         void selectCategoryPos(int secondSelectPos, int thirdSelectPos);
-        void selectCateGoryId(long secondSelectId,long thirdSelectId);
+
+        void selectCateGoryId(long secondSelectId, long thirdSelectId);
     }
 
     public interface FirstSelectCategory {
 
-        void selectedItem(int position,long id);
+        void selectedItem(int position, long id);
 
     }
 }
